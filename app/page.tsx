@@ -1,4 +1,21 @@
+"use client";
+
+import { useState } from "react";
+import LoadingIndicator from "./components/LoadingIndicator";
+
 export default function ProfileVerificationPage() {
+  const [isRequestInFlight, setIsRequestInFlight] = useState(false);
+
+  const handleProceed = async () => {
+    if (isRequestInFlight) return;
+    setIsRequestInFlight(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 4000));
+    } finally {
+      setIsRequestInFlight(false);
+    }
+  };
+
   return (
     <div className="screen">
       <div className="screen__content">
@@ -24,7 +41,11 @@ export default function ProfileVerificationPage() {
         </section>
 
         <div className="upload-zone-wrapper">
-          <button type="button" className="upload-zone">
+          <button
+            type="button"
+            className={`upload-zone${isRequestInFlight ? " upload-zone--disabled" : ""}`}
+            disabled={isRequestInFlight}
+          >
             <div className="upload-zone__brackets" aria-hidden="true">
               <span className="corner-bracket corner-bracket--top-left" />
               <span className="corner-bracket corner-bracket--top-right" />
@@ -57,8 +78,19 @@ export default function ProfileVerificationPage() {
       </div>
 
       <footer className="cta-stack">
-        <button type="button" className="cta-button cta-button--primary">
-          Proceed
+        <button
+          type="button"
+          className={`cta-button cta-button--primary${isRequestInFlight ? " cta-button--loading" : ""}`}
+          disabled={isRequestInFlight}
+          aria-busy={isRequestInFlight}
+          aria-label={isRequestInFlight ? "Proceeding" : "Proceed"}
+          onClick={handleProceed}
+        >
+          {isRequestInFlight ? (
+            <LoadingIndicator style="white" size="small" />
+          ) : (
+            "Proceed"
+          )}
         </button>
       </footer>
     </div>

@@ -131,8 +131,15 @@ button {
   transition: transform 0.14s ease-in-out;
 }
 
-.upload-zone:active {
+.upload-zone:active:not(:disabled) {
   transform: scale(0.96);
+}
+
+.upload-zone:disabled,
+.upload-zone--disabled {
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
 }
 
 .upload-zone__brackets {
@@ -220,6 +227,9 @@ button {
 }
 
 .cta-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   padding: var(--spacing-large) 0;
   border-radius: 9999px;
@@ -230,8 +240,21 @@ button {
   transition: transform 0.30s ease-in-out;
 }
 
-.cta-button:active {
+.cta-button:active:not(:disabled) {
   transform: scale(0.96);
+}
+
+.cta-button:disabled {
+  cursor: default;
+}
+
+.cta-button.cta-button--loading,
+.cta-button.cta-button--loading:disabled {
+  opacity: 0.6;
+}
+
+.cta-button--loading:active {
+  transform: none;
 }
 
 .cta-button--primary {
@@ -240,4 +263,15 @@ button {
 
 .cta-button--secondary {
   background: var(--color-disabled-button);
+}
+
+.loading-indicator {
+  display: block;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
