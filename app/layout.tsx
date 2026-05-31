@@ -1,8 +1,15 @@
 import type { Metadata, Viewport } from "next";
+import { Quicksand } from "next/font/google";
 import "./globals.css";
 
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-quicksand",
+});
+
 export const metadata: Metadata = {
-  title: "Pentagon Demo",
+  title: "Profile Verification",
 };
 
 export const viewport: Viewport = {
@@ -17,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={quicksand.variable}>{children}</body>
     </html>
   );
 }
