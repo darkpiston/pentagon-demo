@@ -13,6 +13,7 @@
   --color-text-field-background: #1e1e1f;
   --color-text-field-stroke: #272727;
   --color-disabled-button: #262626;
+  --color-banner: #484041;
 
   --spacing-margin: 24px;
   --spacing-text: 12px;
@@ -115,16 +116,18 @@ button {
 }
 
 .upload-zone-wrapper {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-large);
   padding-top: var(--spacing-large);
+  min-height: 0;
 }
 
 .text-field {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-text);
+  margin-top: auto;
 }
 
 .text-field__label {
@@ -163,6 +166,8 @@ button {
   width: 100%;
   max-width: var(--upload-zone-max-width);
   aspect-ratio: 1;
+  margin-top: auto;
+  margin-bottom: auto;
   border: 2px dashed var(--color-text-field-hint);
   border-radius: var(--upload-zone-radius);
   transition: transform 0.14s ease-in-out;
@@ -241,6 +246,83 @@ button {
   margin: 0;
   font-size: 14px;
   font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.upload-zone__preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.banner-stack {
+  position: fixed;
+  top: calc(var(--spacing-medium) + env(safe-area-inset-top, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: calc(100% - (var(--spacing-margin) * 2));
+  max-width: 432px;
+}
+
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-text);
+  padding: var(--spacing-large);
+  border-radius: 16px;
+  background: var(--color-banner);
+}
+
+.banner__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.banner__icon--error {
+  background: var(--color-text-primary);
+  color: var(--color-banner);
+}
+
+.banner__icon--warning {
+  background: var(--color-accent);
+  color: var(--color-banner);
+}
+
+.banner__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.banner__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.banner__message {
+  margin: var(--spacing-medium) 0 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+}
+
+.banner__dismiss {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  font-size: 20px;
+  line-height: 1;
   color: var(--color-text-secondary);
 }
 
