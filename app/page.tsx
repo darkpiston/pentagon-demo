@@ -102,7 +102,7 @@ export default function ProfileVerificationPage() {
       setUploadedImageUri(imageUri);
       showBanner({
         title: "Verification Image Uploaded",
-        message: "Keep an eye on your imbox for an update.",
+        message: "Keep an eye on your inbox for an update.",
         style: "warning",
       });
 
