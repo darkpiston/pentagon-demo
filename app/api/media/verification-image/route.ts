@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { tribesVerificationImageUrl } from "@/app/lib/apiEnvironment";
-
-const MAX_UPLOAD_BYTES = 2_097_152;
+import { MAX_UPLOAD_BYTES } from "@/app/lib/imageScaling";
 
 export async function POST(request: Request) {
   try {

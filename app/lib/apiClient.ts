@@ -2,8 +2,7 @@ import {
   VERIFICATION_IMAGE_UPLOAD_URL,
   VERIFY_IMAGE_PROXY_URL,
 } from "./apiEnvironment";
-
-const MAX_UPLOAD_BYTES = 2_097_152;
+import { ImageScalingError, scaleImageToMaxSize } from "./imageScaling";
 
 export type VerifyImageRequest = {
   imageUrl: string;
@@ -15,16 +14,22 @@ export async function uploadVerificationImage(image: File): Promise<string> {
     throw new Error("Please select an image to upload.");
   }
 
-  if (image.size > MAX_UPLOAD_BYTES) {
-    throw new Error("Your photo is too large. Please choose a smaller image.");
-  }
-
   if (!image.type.startsWith("image/")) {
     throw new Error("The selected file must be an image.");
   }
 
+  let uploadFile = image;
+  try {
+    uploadFile = await scaleImageToMaxSize(image);
+  } catch (error) {
+    if (error instanceof ImageScalingError) {
+      throw new Error(error.userMessage);
+    }
+    throw error;
+  }
+
   const formData = new FormData();
-  formData.append("file", image, image.name || "verification.jpg");
+  formData.append("file", uploadFile, uploadFile.name || "verification.jpg");
 
   const response = await fetch(VERIFICATION_IMAGE_UPLOAD_URL, {
     method: "POST",
