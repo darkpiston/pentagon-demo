@@ -1,4 +1,7 @@
-const VERIFICATION_IMAGE_PATH = "/api/media/verification-image";
+import {
+  VERIFICATION_IMAGE_UPLOAD_URL,
+} from "./apiEnvironment";
+
 const MAX_UPLOAD_BYTES = 2_097_152;
 
 export async function uploadVerificationImage(image: File): Promise<string> {
@@ -17,7 +20,7 @@ export async function uploadVerificationImage(image: File): Promise<string> {
   const formData = new FormData();
   formData.append("file", image, image.name || "verification.jpg");
 
-  const response = await fetch(VERIFICATION_IMAGE_PATH, {
+  const response = await fetch(VERIFICATION_IMAGE_UPLOAD_URL, {
     method: "POST",
     body: formData,
   });

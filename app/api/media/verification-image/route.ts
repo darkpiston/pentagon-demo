@@ -1,5 +1,5 @@
-import { randomUUID } from "crypto";
 import { NextResponse } from "next/server";
+import { tribesVerificationImageUrl } from "@/app/lib/apiEnvironment";
 
 const MAX_UPLOAD_BYTES = 2_097_152;
 
@@ -29,10 +29,22 @@ export async function POST(request: Request) {
       );
     }
 
-    const extension = file.type.split("/")[1] || "jpg";
-    const imageUri = `https://example.blob.core.windows.net/user-verification/${randomUUID()}.${extension}`;
+    const outbound = new FormData();
+    outbound.append("file", file, file.name || "verification.jpg");
 
-    return NextResponse.json(imageUri);
+    const upstream = await fetch(tribesVerificationImageUrl(), {
+      method: "POST",
+      body: outbound,
+    });
+
+    const responseBody = await upstream.text();
+    const contentType =
+      upstream.headers.get("content-type") ?? "application/json";
+
+    return new NextResponse(responseBody, {
+      status: upstream.status,
+      headers: { "Content-Type": contentType },
+    });
   } catch {
     return NextResponse.json(
       { detail: "Image upload failed." },
