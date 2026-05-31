@@ -12,3 +12,17 @@ export const VERIFICATION_IMAGE_UPLOAD_URL = `/api${VERIFICATION_IMAGE_PATH}`;
 export function tribesVerificationImageUrl(): string {
   return `${TRIBES_API_BASE_URL}${VERIFICATION_IMAGE_PATH}`;
 }
+
+/** Pentagon Azure Functions app (`tribesfunction`). */
+export const PENTAGON_FUNCTIONS_BASE_URL =
+  process.env.PENTAGON_FUNCTIONS_BASE_URL ??
+  "https://tribesfunction.azurewebsites.net";
+
+export const VERIFY_IMAGE_PATH = "/api/VerifyImage";
+
+/** Same-origin proxy route; forwards to Pentagon VerifyImage (avoids browser CORS). */
+export const VERIFY_IMAGE_PROXY_URL = "/api/pentagon/verify-image";
+
+export function pentagonVerifyImageUrl(): string {
+  return `${PENTAGON_FUNCTIONS_BASE_URL}${VERIFY_IMAGE_PATH}`;
+}

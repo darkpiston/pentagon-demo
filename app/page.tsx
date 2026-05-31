@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import Banner, { type BannerDetail } from "./components/Banner";
 import LoadingIndicator from "./components/LoadingIndicator";
-import { uploadVerificationImage } from "./lib/apiClient";
+import { uploadVerificationImage, verifyImage } from "./lib/apiClient";
 import { isValidEmail } from "./lib/validation";
 
 export default function ProfileVerificationPage() {
@@ -102,9 +102,20 @@ export default function ProfileVerificationPage() {
       setUploadedImageUri(imageUri);
       showBanner({
         title: "Verification Image Uploaded",
-        message: "Your image would be assessed over the next few days.",
+        message: "Keep an eye on your imbox for an update.",
         style: "warning",
       });
+
+      void verifyImage({ imageUrl: imageUri, email: email.trim() }).catch(
+        (error) => {
+          showBanner({
+            title: "Verification Failed",
+            message:
+              error instanceof Error ? error.message : "Verification failed.",
+            style: "error",
+          });
+        },
+      );
     } catch (error) {
       showBanner({
         title: "Verification Upload Failed",
