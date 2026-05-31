@@ -396,3 +396,23 @@ button {
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 480px) {
+  :root {
+    --upload-zone-max-width: 224px;
+    --corner-bracket-leg: 10px;
+    --corner-bracket-inset: 10px;
+    --camera-circle-size: 31px;
+  }
+
+  .screen__content {
+    padding-bottom: calc(180px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .cta-stack {
+    padding-bottom: calc(
+      var(--spacing-margin) * 2 + var(--spacing-large) +
+        env(safe-area-inset-bottom, 0px)
+    );
+  }
+}
