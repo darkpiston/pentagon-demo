@@ -11,6 +11,7 @@
   --color-text-secondary: #8e8e93;
   --color-text-field-hint: #747474;
   --color-text-field-background: #1e1e1f;
+  --color-text-field-stroke: #272727;
   --color-disabled-button: #262626;
 
   --spacing-margin: 24px;
@@ -18,11 +19,14 @@
   --spacing-large: 16px;
   --spacing-medium: 6px;
 
+  --text-field-corner-radius: 12px;
+  --text-field-padding: 14px;
+
   --upload-zone-radius: 16px;
-  --upload-zone-min-height: 220px;
-  --corner-bracket-leg: 18px;
-  --corner-bracket-inset: 20px;
-  --camera-circle-size: 56px;
+  --upload-zone-max-width: 320px;
+  --corner-bracket-leg: 14px;
+  --corner-bracket-inset: 14px;
+  --camera-circle-size: 44px;
 }
 
 body {
@@ -111,11 +115,43 @@ button {
 }
 
 .upload-zone-wrapper {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin-top: var(--spacing-margin);
+  gap: var(--spacing-large);
+  padding-top: var(--spacing-large);
+}
+
+.text-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-text);
+}
+
+.text-field__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.text-field__input {
+  width: 100%;
+  padding: var(--text-field-padding);
+  border: 1px solid var(--color-text-field-stroke);
+  border-radius: var(--text-field-corner-radius);
+  background: var(--color-text-field-background);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-weight: 500;
+  outline: none;
+}
+
+.text-field__input::placeholder {
+  color: var(--color-text-field-hint);
+}
+
+.text-field__input:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 
 .upload-zone {
@@ -123,9 +159,10 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  min-height: var(--upload-zone-min-height);
+  max-width: var(--upload-zone-max-width);
+  aspect-ratio: 1;
   border: 2px dashed var(--color-text-field-hint);
   border-radius: var(--upload-zone-radius);
   transition: transform 0.14s ease-in-out;

@@ -4,6 +4,7 @@ import { useState } from "react";
 import LoadingIndicator from "./components/LoadingIndicator";
 
 export default function ProfileVerificationPage() {
+  const [email, setEmail] = useState("");
   const [isRequestInFlight, setIsRequestInFlight] = useState(false);
 
   const handleProceed = async () => {
@@ -34,13 +35,26 @@ export default function ProfileVerificationPage() {
         <section className="rules">
           <p>1. No Helmets</p>
           <p>2. Face and Bike must be visible.</p>
-          <p>
-            Note that you might only be matched with un-verified riders if you
-            proceed without verification.
-          </p>
         </section>
 
         <div className="upload-zone-wrapper">
+          <div className="text-field">
+            <label className="text-field__label" htmlFor="email">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              className="text-field__input"
+              placeholder="Enter Email to get notified"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              disabled={isRequestInFlight}
+              autoCapitalize="none"
+              autoCorrect="off"
+            />
+          </div>
+
           <button
             type="button"
             className={`upload-zone${isRequestInFlight ? " upload-zone--disabled" : ""}`}
@@ -55,8 +69,8 @@ export default function ProfileVerificationPage() {
             <div className="upload-zone__center">
               <span className="camera-icon-circle">
                 <svg
-                  width="28"
-                  height="28"
+                  width="24"
+                  height="24"
                   viewBox="0 0 24 24"
                   fill="none"
                   aria-hidden="true"
